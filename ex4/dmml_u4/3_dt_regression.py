@@ -9,16 +9,31 @@ import utils
 
 def get_dt_prediction(X_train: np.ndarray, y_train: np.ndarray, max_depth: int) -> np.ndarray:
     """Fits a decision tree regressor and returns its predictions as an array."""
-    regr = DecisionTreeRegressor(max_depth)
-    regr.fit(X_train, y_train)
-    X_test = np.arange(0.0, 5.0, 0.01)[:, np.newaxis]
-    return regr.predict(X_test)
+    # Fit regression model
+    regr_1 = DecisionTreeRegressor(max_depth=max_depth)
+    regr_1.fit(X_train, y_train)
+    # Predict
+    y_pred = regr_1.predict(X_train)
+    return y_pred
 
 
 
 def plot_regression_models(X_cont: np.ndarray, y_cont: np.ndarray, y_1: np.ndarray, y_2: np.ndarray) -> None:
     """Plots the regression results for y_1 and y_2 on top of the training data X_cont, y_cont."""
-    raise NotImplementedError
+    plt.figure(figsize=(12, 4))
+    ax = plt.subplot(121)
+    plt.scatter(X_cont, y_cont, s=20, edgecolor="black")
+    plt.plot(X_cont, y_1, label="$max\_depth=2$", color="orange")
+    ax.legend()
+    ax.set_ylabel("Target")
+    ax.set_xlabel("Data")
+    ax = plt.subplot(122)
+    plt.scatter(X_cont, y_cont, s=20, edgecolor="black")
+    plt.plot(X_cont, y_2, label="$max\_depth=5$", color="green")
+    ax.legend()
+    plt.xlabel("Data")
+    plt.suptitle("Decision Tree Regression")
+    plt.show()
 
 
 def main():
