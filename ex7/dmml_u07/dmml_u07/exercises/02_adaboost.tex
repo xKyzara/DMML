@@ -1,0 +1,52 @@
+\begin{task}[credit=15]{AdaBoost}
+In dieser Aufgabe werden Sie AdaBoost auf die gegebenen Trainingsbeispiele aus der Tabelle~\ref{t:boost_data} anwenden. 
+
+\begin{table}[h]
+\caption{Datensatz mit zwei Merkmalen und zwei Zielklassen.}
+\label{t:boost_data}
+\centering
+\begin{tabular}{c|c|c}
+$\mathbf{x_1}$ & $\mathbf{x_2}$  & \textbf{Klasse} \\
+\midrule
+1 & 5  & +      \\
+2 & 2  & +      \\
+5 & 8  & +      \\
+6 & 10 & +      \\
+8 & 7  & +      \\
+3  & 1 & -      \\
+4  & 6  & -     \\
+7  & 4  & -     \\
+9  & 3  & -     \\
+10 & 9  & -     \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Entscheidungsstümpfe mit ganzzahligem Schwellwert (z.B. $\mathbf{x_1}\leq T \Rightarrow +$ oder $\mathbf{x_1} > T \Rightarrow +$) sollen als Basis-Lerner verwendet werden. Der Basis-Lerner minimiert die Summe der Gewichtungen der falsch klassifizierten Beispiele aus allen möglichen Aufteilungen. Für ein Unentschieden wählen Sie die erste gefundene Übereinstimmung, beginnend mit Entscheidungsstümpfen für $\mathbf{x_1}$ und dann $\mathbf{x_2}$.
+
+Verwenden Sie die Formel:
+\begin{equation}
+    \alpha_{i} = \frac{1}{2}\log\left (\frac{1-err_{i}}{err_{i}}\right )
+\end{equation}
+zur Berechnung von $\alpha_{i}$.
+
+\textbf{Hinweis:} Mit $\log(\dots)$ ist hier der Logarithmus zur Basis $e$, $\text{ln}(\dots)$, gemeint.
+
+\begin{subtask}[title=Algorithmus,points=12]
+ Zeigen Sie die Ausführung des Adaboost Algorithmus für die \textbf{ersten beiden} Iterationen.
+ Geben Sie dabei die \textbf{Fehler} (Summe der Gewichtungen der falsch klassifizierten Beispiele) für die möglichen Entscheidungsgrenzen von $1$ bis $10$ an, sowie die \textbf{Gewichtung} jedes Datenpunktes vor und nach Normalisierung an.
+
+\begin{solution}
+% Geben Sie hier Ihre Antwort an.
+\end{solution}
+\end{subtask}
+
+\begin{subtask}[title=Gesamtmodell,points=3]
+ Geben Sie das Gesamtmodell $f(x)$ nach zwei Iterationen an.
+\begin{solution}
+% Geben Sie hier Ihre Antwort an.
+\end{solution}
+\end{subtask}
+
+\end{task}
+

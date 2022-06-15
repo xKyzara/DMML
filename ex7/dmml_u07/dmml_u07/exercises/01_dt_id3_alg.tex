@@ -1,0 +1,82 @@
+\begin{task}[credit=16]{Entscheidungsbäume - ID3 Algorithmus}
+Die folgende Tabelle zeigt die Entscheidung, ob Baseball gespielt wird, basierend auf vier Wetterattributen.
+
+\begin{table}[h]
+\centering
+\caption{Trainingsdatensatz, ob Baseball gespielt wird basierend auf der Wetterlage.}
+\label{tab:data_baseball}
+\begin{tabular}{l|c|c|c|c|c}
+\toprule
+\textbf{Tag} & \textbf{Ausblick (A)} & \textbf{Temperatur (T)}  & \textbf{Luftfeuchtigkeit (L)} & \textbf{Wind (W)}     & \textbf{Spielt Baseball (B)} \\
+\midrule
+T1  & Sonnig    & Warm        & Hoch             & Schwach  & Nein            \\
+T2  & Sonnig    & Warm        & Hoch             & Stark    & Nein            \\
+T3  & Bewölkung & Warm        & Hoch             & Schwach  & Ja              \\
+T4  & Regen     & Mild        & Hoch             & Schwach  & Ja              \\
+T5  & Regen     & Kühl        & Normal           & Schwach  & Ja              \\
+T6  & Regen     & Kühl        & Normal           & Stark    & Nein            \\
+T7  & Bewölkung & Kühl        & Normal           & Stark    & Ja              \\
+T8  & Sonnig    & Mild        & Hoch             & Schwach  & Nein            \\
+T9  & Sonnig    & Kühl        & Normal           & Schwach  & Ja              \\
+T10 & Regen     & Mild        & Normal           & Schwach  & Ja              \\
+T11 & Sonnig    & Mild        & Normal           & Stark    & Ja              \\
+T12 & Bewölkung & Mild        & Hoch             & Stark    & Ja              \\
+T13 & Bewölkung & Warm        & Normal           & Schwach  & Ja              \\
+T14 & Regen     & Mild        & Hoch             & Stark    & Nein            \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[h!]
+\centering
+\caption{Vorhersage-Datensatz, ob Baseball gespielt wird.}
+\label{tab:data_baseball_predict}
+\begin{tabular}{l|c|c|c|c|c}
+\toprule
+\textbf{Tag} & \textbf{Ausblick (A)} & \textbf{Temperatur (T)}  & \textbf{Luftfeuchtigkeit (L)} & \textbf{Wind (W)}     & \textbf{Spielt Baseball (B)} \\
+\midrule
+T15 & Sonnig    & Mild        & Hoch     & Schwach & ?       \\
+T16 & Bewölkung & Mild        & Normal   & Schwach & ?       \\
+T17 & Regen     & Kühl        & Normal   & Stark   & ?       \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Die Aufgabe ist es folgende Frage zu beantworten: \textit{Unter welchen Bedingungen wir Baseball gespielt?}
+
+\begin{subtask}[points=10,title=ID3 Algorithmus]
+\label{q:id3_alg}
+Erstellen Sie den Entscheidungsbaum mittels des ID3 Algorithmus.
+Berechnen Sie dabei die \textbf{Entropie} und den \textbf{Informationsgewinn} (engl. \textit{gain}) der Attribut-Selektion für jeden Schritt.
+Verwenden Sie bei der Berechnung der Entropie den Logarithmus zur Basis 2, Logarithmus-Dualis.
+
+\textbf{Hinweis:} Sie können \textbf{Spielt Baseball (B)} mit $B$ kennzeichnen. Der Informationsgewinn ist nach Vorlesung wie folgt definiert:
+\textit{Differenz zwischen den Informationen der Beispiele mit und ohne die Aufteilung durch $X_j$.}
+
+Bsp. Informationsgewinn für Aufteilung des Wurzelknotens nach dem Merkmal \textit{Ausblick}. 
+\begin{align*}
+Gain\left (B, Ausblick \right ) &= Entropy\left (B \right ) \\&- \frac{B_\text{Ausblick=Sonnig}}{B}\cdot Entropy\left (B_\text{Ausblick=Sonnig} \right ) \\
+&- \frac{B_\text{Ausblick=Regen}}{B}\cdot Entropy\left (B_\text{Ausblick=Regen} \right )\\ &- \frac{B_\text{Ausblick=Bewölkung}}{B}\cdot Entropy\left (B_\text{Ausblick=Bewölkung} \right )
+\end{align*}
+
+\begin{solution}
+% Geben Sie hier Ihre Antwort an.
+\end{solution}
+\end{subtask}
+
+\begin{subtask}[points=3,title=Visualisierung]
+Erstellen Sie eine Visualsierung (Plot oder eingefügte Zeichnung) des Entscheidungsbaumes aus Aufgabenteil~\ref{q:id3_alg}.
+
+ \begin{solution}
+% Geben Sie hier Ihre Antwort an.
+\end{solution}
+
+\end{subtask}
+
+\begin{subtask}[points=3,title=Vorhersage]
+Geben Sie anhand ihres Entscheidungsbaumes eine Vorhersage für die Tage 15 bis 17 aus Tabelle~\ref{tab:data_baseball_predict}, ob Baseball gespielt wird.
+\begin{solution}
+% Geben Sie hier Ihre Antwort an.
+\end{solution}
+\end{subtask}
+\end{task}

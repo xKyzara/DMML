@@ -18,19 +18,32 @@ sns.set(
 def evaluate_n_estimators(X: np.ndarray, y: np.ndarray, n: int) -> (float, float):
     """"Run 10 fold cross-validation of the model for a given number of trees and returns the
     mean train and test score."""
-    raise NotImplementedError
+    model = RandomForestClassifier(n_estimators=n)
+    scores = cross_validate(
+        estimator=model, X=X, y=y, scoring="accuracy", cv=10, return_train_score=True, n_jobs=-1,
+    )
+    return np.mean(scores["train_score"]), np.mean(scores["test_score"])
+
 
 
 def evaluate_depth(X: np.ndarray, y: np.ndarray, depth: int) -> (float, float):
     """Run 10 fold cross-validation of the model for a given tree depth and returns the
     mean train and test score."""
-    raise NotImplementedError
+    model = RandomForestClassifier(max_depth=depth, n_estimators=20)
+    scores = cross_validate(
+        estimator = model, X = X, y = y, scoring = "accuracy", cv = 10, return_train_score = True, n_jobs = -1,
+    )
+    return np.mean(scores["train_score"]), np.mean(scores["test_score"])
 
 
 def evaluate_features(X: np.ndarray, y: np.ndarray, n_features: int) -> (float, float):
     """"Run 10 fold cross-validation of the model for a given number of features per tree and returns the
     mean train and test score."""
-    raise NotImplementedError
+    model = RandomForestClassifier(max_features=n_features, n_estimators=20)
+    scores = cross_validate(
+        estimator = model, X = X, y = y, scoring = "accuracy", cv = 10, return_train_score = True, n_jobs = -1,
+    )
+    return np.mean(scores["train_score"]), np.mean(scores["test_score"])
 
 
 def plot_accuracy(xs: range, accuracies: np.ndarray, xlabel: str, ylabel="Accuracy") -> None:

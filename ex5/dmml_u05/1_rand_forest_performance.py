@@ -23,13 +23,55 @@ sns.set(
 def cross_val_dt_rt(load_fun) -> (dict, dict):
     """Conducts a 10-fold cross validation for a decision tree and random forrest and
      returns their accuracy scores given an sklearn discrete dataset loader function."""
-    raise NotImplementedError
+    X, y = load_fun(return_X_y=True)
+    # Cross-validate Decision Tree and Random Forest
+    scores_dt = cross_validate(
+        estimator=DecisionTreeClassifier(),
+        X=X,
+        y=y,
+        scoring="accuracy",
+        cv=10,
+        return_train_score=True,
+        n_jobs=-1,
+    )
+    scores_rf = cross_validate(
+        estimator=RandomForestClassifier(n_estimators=20),
+        X=X,
+        y=y,
+        scoring="accuracy",
+        cv=10,
+        return_train_score=True,
+        n_jobs=-1,
+    )
+    return scores_dt, scores_rf
 
 
 def cross_val_dt_rf_continuous(load_fun) -> (dict, dict):
     """Conducts a 10-fold cross validation for a decision tree and random forrest and
      returns their mse scores given an sklearn discrete dataset loader function."""
-    raise NotImplementedError
+    # Load data
+    X, y = load_fun(return_X_y=True)
+    # Cross-validate Decision Tree and Random Forest
+    scores_dt = cross_validate(
+        estimator=DecisionTreeRegressor(),
+        X=X,
+        y=y,
+        scoring=make_scorer(mean_squared_error),
+        cv=10,
+        return_train_score=True,
+        n_jobs=-1,
+    )
+
+    scores_rf = cross_validate(
+        estimator=RandomForestRegressor(n_estimators=20),
+        X=X,
+        y=y,
+        scoring=make_scorer(mean_squared_error),
+        cv=10,
+        return_train_score=True,
+        n_jobs=-1,
+    )
+    return scores_dt, scores_rf
 
 
 def main():
@@ -58,10 +100,10 @@ def main():
         print(f"              \t\tAccuracy (%)")
         print(f"              \tTrain     \tTest")
         print(
-            f"Decision Tree\t{scores_dt['train_score'].mean()*100:.2f}\t\t{scores_dt['test_score'].mean()*100:.2f}"
+            f"Decision Tree\t{scores_dt['train_score'].mean() * 100:.2f}\t\t{scores_dt['test_score'].mean() * 100:.2f}"
         )
         print(
-            f"Random Forest\t{scores_rf['train_score'].mean()*100:.2f}\t\t{scores_rf['test_score'].mean()*100:.2f}\n\n"
+            f"Random Forest\t{scores_rf['train_score'].mean() * 100:.2f}\t\t{scores_rf['test_score'].mean() * 100:.2f}\n\n"
         )
 
     # For each regression dataset evaluate:
