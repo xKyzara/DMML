@@ -17,7 +17,20 @@ def evaluate_loss_fn(X_train: np.ndarray, y_train: np.ndarray,
                      X_test: np.ndarray, y_test: np.ndarray,
                      loss_fn="ls", learning_rate=0.5) -> np.ndarray:
     """Fits a GradientBoostingRegressor on the training data and returns the training and test mse for all iterations"""
-    raise NotImplementedError
+    gb = GradientBoostingRegressor(
+    loss = loss_fn,
+    learning_rate = learning_rate,
+    n_estimators = 200,
+    random_state = 0,
+    )
+    gb.fit(X_train, y_train)
+    # Collect train/test mse
+    mses = []
+    for y_train_pred, y_test_pred in zip(gb.staged_predict(X_train), gb.staged_predict(X_test)):
+        mse_train = mse(y_train, y_train_pred)
+        mse_test = mse(y_test, y_test_pred)
+        mses.append([mse_train, mse_test])
+    return np.array(mses)
 
 
 def main():

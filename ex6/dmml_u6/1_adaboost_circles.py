@@ -16,12 +16,32 @@ import utils
 def plot_dataset(X_train: np.ndarray, X_test: np.ndarray, y_train: np.ndarray, y_test: np.ndarray) -> None:
     """Creates as scatterplot for the given dataset. The points for the first class are blue and the points for the
      second class are red. Training points are displayed as dots and testpoints are described by an X."""
-    raise NotImplementedError
+    plt.figure(figsize=(4, 4))
+    plt.scatter(*X_train.T, c=y_train, cmap=ListedColormap(["#FF0000", "#0000FF"]), label="Training Points", marker="o")
+    plt.scatter(*X_test.T, c=y_test, cmap=ListedColormap(["#FF0000", "#0000FF"]), label="Test Points", marker="x")
+    plt.xlabel("$X_0$")
+    plt.ylabel("$X_1$")
+    plt.legend()
+    plt.show()
 
 
 def plot_decision_boundary_stump(stump: DecisionTreeClassifier, X: np.ndarray, y: np.ndarray, N=1000) -> None:
     """Plot the decision boundary for a tree stump and scatters plot of the training data"""
-    raise NotImplementedError
+    x_min, x_max = X[:, 0].min() - 0.1, X[:, 0].max() + 0.1
+    y_min, y_max = X[:, 1].min() - 0.1, X[:, 1].max() + 0.1
+    xx, yy = np.meshgrid(np.linspace(x_min, x_max, N), np.linspace(y_min, y_max, N))
+    plt.figure(figsize=(4, 4))
+    plt.title(f"Decision Boundary of a Decision Stump")
+    zz = stump.predict_proba(np.c_[xx.ravel(), yy.ravel()])
+    Z = zz[:, 1].reshape(xx.shape)
+    cm_bright = ListedColormap(["#FF0000", "#0000FF"])
+    # Get current axis and plot
+    ax = plt.gca()
+    ax.contourf(xx, yy, Z, 2, cmap="RdBu", alpha=0.5)
+    ax.contour(xx, yy, Z, 2, cmap="RdBu")
+    ax.scatter(X[:, 0], X[:, 1], c=y, cmap=cm_bright)
+    ax.set_xlabel("$X_0$")
+    ax.set_ylabel("$X_1$")
 
 
 def main():

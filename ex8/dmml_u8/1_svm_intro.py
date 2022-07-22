@@ -18,23 +18,38 @@ sns.set(
 
 def plot_data(X, y):
     """Plots the data and label assignment as a scatter plot."""
-    raise NotImplementedError
+    plt.scatter(X[:, 0], X[:, 1], c=y, cmap=plt.cm.Paired, edgecolors="k", zorder=10)
+    plt.xticks([])
+    plt.yticks([])
+    plt.axis("tight")
+    plt.show()
 
 
 def fit_linear_svm(X, y):
     """Fits a svm with a linear kernel and no regularization to the data."""
-    raise NotImplementedError
+    clf = svm.SVC(kernel="linear", C=1e10, max_iter=10000)
+    clf.fit(X, y)
+    return clf
 
 
 def fit_rbf_svm(X, y):
     """Fits a svm with a rbf kernel and no regularization to the data."""
-    raise NotImplementedError
+    clf = svm.SVC(kernel="rbf", C=1e10, gamma="auto")
+    clf.fit(X, y)
+    return clf
 
 
 def plot_svm_C(X, y):
     """Plot the decision boundaries and support vectors for regularization constants:
     C=[2^-6, 2^-3, 1, 2^3, 2^6, 2^12]."""
-    raise NotImplementedError
+    # min = -6, max = 12
+    for C in range(-6, 13, 3):
+        # Create an SVC object with the rbf kernel parameter
+        clf = svm.SVC(kernel="rbf", C=2 ** C, max_iter=10000, gamma="auto")
+        # Fit the hyperplane to the data
+        clf.fit(X, y)
+        # Plot data with hyperplane and support vectors
+        utils.plot_support_vectors(X, y, clf, title="$C=2^{%s}$" % C)
 
 
 def main():

@@ -15,7 +15,13 @@ import utils
 
 def plot_digit_dataset(X_train: np.ndarray, y_train: np.ndarray) -> None:
     """Plots the first 5 images of the digit dataset."""
-    raise NotImplementedError
+    plt.figure()
+    for i, (x_i, y_i) in enumerate(zip(X_train[:5], y_train[:5]), start=1):
+        plt.subplot(150 + i)
+        plt.imshow(x_i.reshape(8, 8), cmap="gray")
+        plt.title("label = " + str(y_i))
+        plt.axis("off")
+    plt.show()
 
 
 def get_acc_for_estimators(base_estimator: DecisionTreeClassifier, X_train: np.ndarray,
@@ -23,7 +29,18 @@ def get_acc_for_estimators(base_estimator: DecisionTreeClassifier, X_train: np.n
                            n_estimators: int, learning_rate: float):
     """Fits an AdaBoostClassifier on the given training data and returns the training and test accuracy for all
      iterations."""
-    raise NotImplementedError
+    # Create AdaBoost model
+    model = AdaBoostClassifier(base_estimator=base_estimator, n_estimators=n_estimators, learning_rate=learning_rate)
+    # Fit model
+    model.fit(X_train, y_train)
+    # Evaluate model on train/test set
+    accuracy_train = [
+        accuracy_score(y_pred, y_train) for y_pred in model.staged_predict(X_train)
+    ]
+    accuracy_test = [
+        accuracy_score(y_pred, y_test) for y_pred in model.staged_predict(X_test)
+    ]
+    return model, accuracy_train, accuracy_test
 
 
 def main():

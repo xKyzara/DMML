@@ -12,7 +12,15 @@ import utils
 def run_grid_search(X_digits, y_digits, C_range, degree_range, gamma_range):
     """Defines and runs a grid search over the given hyperparameter ranges for
     rbf and polynomial kernel. Each run is evaluated by using a 5-fold-cross-validation."""
-    raise NotImplementedError
+    # Define grid over parameters for rbf and poly kernel
+    rbf_grid = {"kernel": ["rbf"], "C": C_range, "gamma": gamma_range}
+    poly_grid = {"kernel": ["poly"], "C": C_range, "degree": degree_range}
+    # GridSearch arguments
+    args = dict(estimator = svm.SVC(), scoring = make_scorer(accuracy_score), cv = 5, verbose = 1, n_jobs = -1)
+    # Run gridsearch on the RBF grid
+    rbf_gs = GridSearchCV(param_grid=rbf_grid, **args).fit(X_digits, y_digits)
+    poly_gs = GridSearchCV(param_grid=poly_grid, **args).fit(X_digits, y_digits)
+    return poly_gs, rbf_gs
 
 
 def main():
@@ -39,7 +47,7 @@ def main():
         ylabel="C",
         xlabel="degree",
         title="SVM Poly Kernel",
-        fignum="121",
+        fignum=121,
     )
     utils.visualize_gridsearch(
         rbf_gs,
@@ -49,7 +57,7 @@ def main():
         xlabel="$\gamma$",
         title="SVM RBF Kernel",
         logx=True,
-        fignum="122",
+        fignum=122,
         cbar=True,
     )
     plt.show()

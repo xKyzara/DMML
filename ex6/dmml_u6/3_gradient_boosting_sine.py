@@ -12,7 +12,11 @@ import utils
 def fit_gradient_boosting_regressor(X: np.ndarray, n_samples: int, y: np.ndarray,
                                     learning_rate: float, max_depth: int, random_state: int, loss: str):
     """Fits gradient tree boosting regressor and returns the learned model and training errors."""
-    raise NotImplementedError
+    gb = GradientBoostingRegressor(n_estimators = n_samples, learning_rate = learning_rate, max_depth = max_depth, random_state = random_state, loss = loss)
+    gb.fit(X, y)
+    # Obtain loss after each training iteration
+    train_errors = gb.train_score_
+    return gb, train_errors
 
 
 def main():

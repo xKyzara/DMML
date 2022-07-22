@@ -20,22 +20,57 @@ sns.set(
 
 def plot_cluster_data(X):
     """Creates a scatter plot for the given data."""
-    raise NotImplementedError
+    plt.figure()
+    plt.scatter(X[:, 0], X[:, 1])
+    plt.axis("off")
+    plt.show()
 
 
 def fit_kmeans(X, k, init="k-means++", n_init=10, random_state=0) -> [np.ndarray, np.ndarray]:
     """Runs K-Means clustering and returns the label assignments and cluster centroids."""
-    raise NotImplementedError
+    # Build K-Means model
+    model = KMeans(n_clusters=k, n_init=n_init, init=init, random_state=random_state)
+    # Fit model
+    model.fit(X)
+    # Predict cluster assignment for each datapoint
+    labels = model.predict(X)
+    # Get cluster centers
+    centers = model.cluster_centers_
+    return labels, centers
 
 
 def plot_clustering(X, labels, centers=None, title="", subplot=None):
     """Helper function to plot the clustering"""
-    raise NotImplementedError
+    # Plot in given subplot
+    if subplot:
+        plt.subplot(subplot)
+
+    # Plot data with labels as color
+    plt.scatter(X[:, 0], X[:, 1], c=labels)
+    # Plot centers if given
+    if centers is not None:
+        plt.scatter(
+            centers[:, 0], centers[:, 1], c = "red", s = 150, alpha = 0.9, label = "Centers"
+        )
+        # Set title
+        plt.title(title)
+        plt.axis("off")
 
 
 def plot_kmeans_iterations(X, guess_center, initial_labels):
     """Plots the cluster assignments after iteration 1..6."""
-    raise NotImplementedError
+    plt.figure(figsize=(2 * 3, 3 * 3))
+    plot_clustering(
+        X, initial_labels, centers = guess_center, title = "Iteration 0", subplot = 321
+    )
+    for i in range(1, 6):
+        # Stop K-Means after i iterations
+        model = KMeans(n_clusters=3, init=guess_center, n_init=1, max_iter=i).fit(X)
+        labels = model.predict(X)
+        centers = model.cluster_centers_
+        # Plot clustering for current iteration
+        plot_clustering(X, labels, centers, title="Iteration " + str(i), subplot=321 + i)
+    plt.show()
 
 
 def plot_kmeans(X, k, title, subplot=None):
